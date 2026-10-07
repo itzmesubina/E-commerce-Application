@@ -1,0 +1,96 @@
+<%-include("../admin/layout/header.ejs")%>
+<section class="col pt-lg-4 pb-4 mb-3 me-4">
+    <div class="pt-2 px-4 ps-lg-0 pe-xl-5 mb-2">
+      <h2 class="h4 pt-2 pb-4 mb-0 text-center text-sm-start border-bottom border-primary">Orders<span class="badge bg-faded-accent fs-sm text-body align-middle ms-2"><%=OrderCount %></span></h2>
+      </div>
+      <!-- Product-->
+      <table id="order" class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Order Id</th>
+                <th scope="col">Products</th>
+                <th scope="col">Address</th>
+                <th scope="col">date</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Payment Status</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Order Status</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <% OrderData.forEach(function(OrderData,i){%>
+         
+                <tr>
+                  <th><%=i+1%></th>
+                  <td style="width: 20px;"><%=OrderData._id%></td>
+                  
+                  <td>
+                    <%OrderData.products.forEach((orderData,i) => {%>
+                        <%=orderData.product.name %>, <br>
+                        <% }) %>
+                </td>
+                <td ><p class="m-0" style="font-size: 14px; line-height: 1.3; font-weight: 400;" > Name:<%=OrderData.address.fname%> <%=OrderData.address.lname%> <br>
+                    Address: <%=OrderData.address.house%>,<%=OrderData.address.locality%>,<br><%=OrderData.address.hometown%>,<%=OrderData.address.city%>,<br>
+                    <%=OrderData.address.state%>,<%=OrderData.address.country%> <br>
+                    Pin:<%=OrderData.address.pin%></p>
+                  </td>
+                <td><%=OrderData.date.toLocaleString() %></td>
+                <td><%=OrderData.paymentMethod%></td>
+                <td><%=OrderData.paymentStatus%></td>
+                <td><%=OrderData.Subtotal%>/-</td>
+                  <td> <% if(OrderData.orderStatus=="Canceled"){%>
+
+                   <p class="text-warning"> <%=OrderData.orderStatus%></p>
+
+                  <%}else if(OrderData.orderStatus=="Confirmed"){ %>
+
+                   <p class="text-info"><%=OrderData.orderStatus%></p>
+
+                    <button type="button" class="btn btn-primary btn-sm mt-5" id="orderStatus" onclick="changeStatus('<%=OrderData._id%>')" value="Delivered">Delivered</button>
+                    
+                    <% }else if(OrderData.orderStatus=="Delivered"){%>
+
+                        <p class="text-success"><%=OrderData.orderStatus%></p>
+
+                    <%}else if(OrderData.orderStatus=="Returned"){ %>
+
+                    <p class="text-warning"><%=OrderData.orderStatus%></p>
+
+                    <% } %>
+                </td>
+                  </div>
+                </tr>
+              <%})%></tbody>
+          </section>
+       
+    
+    <script>
+      $(document).ready(function () {
+         $('#order').DataTable();
+         $('.dataTables_length').addClass('bs-select');
+      });
+
+      function changeStatus(orderId){
+        let buttonValue = $(orderStatus).val();
+        console.log(buttonValue);
+        console.log(orderId);
+        $.ajax({
+            url:'/admin/changeOrderStatus',
+            data:{
+                orderId:orderId,
+                orderStatus:buttonValue,
+            },
+            method:'post',
+            success:(response)=>{
+                
+            }
+        }).then((data)=>{
+            console.log(data);
+            location.reload()
+        })
+      }
+    </script>
+
+<%-include("../admin/layout/footer.ejs")%>

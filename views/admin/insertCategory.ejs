@@ -1,0 +1,34 @@
+<%-include("../admin/layout/header.ejs")%>
+
+<section class="col pt-lg-4 pb-4 mb-3 me-4">
+  <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+    <h2 class="h4 pt-2 pb-4 mb-0 text-center text-sm-start border-bottom border-primary">Add Category <span class="badge bg-faded-accent fs-sm text-body align-middle ms-2"></span></h2>
+    </div>
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="width: 100%;height: 100vh;">
+        <form action="/admin/insertCategory" method="post" style="width: 70%; height: 100%;">
+          <div class="form-group">
+            <div class="form-floating mb-3 mt-5">
+              <input name="catName" type="text" class="form-control border border-dark" id="floatingInput" required placeholder="Category Name"/>
+              <label for="floatingInput">Category Name</label>
+            </div>
+            <div class="form-floating">
+              <textarea name="description" type="password" class="form-control border border-dark" required id="floatingPassword" placeholder="description"></textarea>
+              <label for="floatingPassword">Description</label>
+            </div>
+          </div>
+  
+          <div class="pt-5 pb-4  d-flex justify-content-end">
+            <button type="submit" class="btn btn-outline-primary btn-lg">
+              Add
+            </button>
+          </div>
+          <%if(typeof message !=="undefined"){%>
+            <div class="alert alert-danger" role="alert">
+             <%=message%>
+            </div>
+          <%}%>
+        </form>
+      </div>
+</section>
+
+<%-include("../admin/layout/footer.ejs")%>

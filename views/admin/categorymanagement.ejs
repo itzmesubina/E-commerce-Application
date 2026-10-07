@@ -1,0 +1,106 @@
+<%-include("../admin/layout/header.ejs")%>
+<section class="col-lg-8 pt-lg-4 pb-4 mb-3 ">
+    <div class="pt-2 pt-4 d-flex">
+      
+      <h2 class="h4 pt-2 pb-4 mb-0 text-center text-sm-start border-bottom border-primary " style="width: 74vw;">Category Management <span class="badge bg-faded-accent fs-sm text-body align-middle ms-2"><%=catCount%></span></h2>
+      <a href="/admin/insertCategory"><button type="button" class="btn btn-primary">Add Category</button></a>
+      <!--category table-->
+    </div>
+      <div class="table pt-3 " style="width: 74vw;">
+        <div>
+      <table class="table  pe-5 me-3" id="hai">
+        <thead>
+          <tr>
+            <th scope="col">SI.No</th>
+            <th scope="col">Category Name</th>
+            <th scope="col">description</th>
+            <th scope="col">status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%catdetails.forEach(function(catdetails,i){%>
+            <tr>
+            <td scope="col"><%=i+1%></td>
+            <td scope="col"><%=catdetails.categoryName%></td>
+            <td scope="col"><%=catdetails.description%></td>
+            <td scope="col"><%=catdetails.status%></td>
+            <td>
+              <a href="/admin/editCategory?id=<%=catdetails._id%>"><button type="button" class="btn btn-info">Edit</button></a>
+              <% if(catdetails.status== "Active") {%>
+                <button type="button" onclick="catdelete('<%=catdetails._id%>')" class="btn btn-primary">Disable</button>
+              <%}else if(catdetails.status== "dead") {%>
+                <button type="button" onclick="catActive('<%=catdetails._id%>')" class="btn btn-success">Enable</button>
+              <% } %>
+            </td>
+          </tr>
+          <%});%>
+          
+       </tbody>
+       </table>
+    </div>
+    </div>
+    <div>
+  
+</div>
+</section>
+<script>
+  $(document).ready(function () {
+     $('#hai').DataTable();
+     $('.dataTables_length').addClass('bs-select');
+  });
+</script>
+<script>
+  function catdelete(catdata){
+    console.log(catdata);
+    Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't to disable this category!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    $.ajax({
+      url:'/admin/deleteCategory',
+      data:{
+        catData:catdata
+      },
+      method:'post',
+      success:(Response)=>{
+      
+      }
+    }).done((data)=>{
+      if(data.success){
+        Swal.fire(
+      'Disabled!',
+      'This category has been disabled.',
+      'success'
+    ).then(function(response){
+      location.reload()
+    })
+    
+      }
+    })
+  }
+})
+}
+
+
+  // enable category
+ function catActive(catId){
+  axios({
+    method: 'post',
+    url: '/admin/catActive',
+    data: {
+      catId:catId
+    }
+  }).then(function(response){
+    location.reload()
+  })
+ }
+</script>
+
+<%-include("../admin/layout/footer.ejs")%>

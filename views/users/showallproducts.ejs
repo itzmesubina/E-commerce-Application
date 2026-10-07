@@ -1,0 +1,201 @@
+<%-include("../users/layout/header.ejs") %>
+
+<!-- used for shop templates with filters on top-->
+<div class="bg-dark pt-4 pb-5">
+    <div class="container pt-2 pb-3 pt-lg-3 pb-lg-4">
+      <div class="d-lg-flex justify-content-between pb-3">
+        <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+              <li class="breadcrumb-item"><a class="text-nowrap" href="/"><i class="ci-home"></i>Home</a></li>
+            </ol>
+          </nav>
+        </div>
+        <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+          <h1 class="h3 text-light mb-0">All products</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container pb-5 mb-2 mb-md-4">
+    <!-- Toolbar-->
+    <div class="bg-light shadow-lg rounded-3 p-4 mt-n5 mb-4">
+      <div class="d-flex justify-content-center align-items-center">
+        <nav class="d-flex justify-content-center pt-2" aria-label="Page navigation">
+          <ul class="pagination">
+         
+          </ul>
+          <ul id="pagination" style="display: flex;" class="pagination">
+            <% for(let j=1;j<=totalPage;j++){%>
+              <li class="page-item d-none d-sm-block"> <a onclick="pagination('<%= j %>')" class="page-link" id="page"><%= j %></a></li>
+            <%} %>
+          </ul>
+          <ul class="pagination">
+           
+          </ul>
+        </nav>
+
+      </div>
+      <!-- Toolbar with expandable filters-->
+      
+    </div>
+    <!-- Products grid-->
+    <div class="row pt-3 mx-n2" id="searched">
+      <!-- Product-->
+      <%ProductData.forEach(function(ProductData,i){%>
+
+      <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4" id="searchProduct">
+        <div class="card product-card">
+          <a href="/addToWishlist?id=<%=ProductData._id%>"><button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></a></button><a class="card-img-top d-block overflow-hidden" href="/singleproduct?id=<%=ProductData._id%>"><img src="Image/<%=ProductData.image[0]%>" alt="Product" style="width:295px;height: 250px;border-radius:0.3rem;"></a>
+          <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+            <h3  class="product-title fs-sm"><a  class="productName"><%=ProductData.name%></a></h3>
+            <div class="d-flex justify-content-between">
+              <div class="product-price"><span class="text-accent"><%=ProductData.price%>.<small>00</small></span></div>
+              <div class="star-rating">
+              </div>
+            </div>
+          </div>
+          <div class="card-body card-body-hidden">
+             <%if(ProductData.stock<=0){%>
+                  <button class="btn btn-dark btn-sm d-block w-100 mb-2" type="button">
+                    <div class="d-flex m-0 p-0 justify-content-center">
+                    <p class="m-0 p-0 pe-1"><span style="font-size: 15px; padding-top: 2px;" class="material-symbols-outlined">brightness_empty</span></p>
+                    Out Of Stock
+                  </div>
+                  </button>
+                <%}else{%>
+                <a href="/addToCart?id=<%=ProductData._id%>"><button class="btn btn-primary btn-sm d-block w-100 mb-2"  type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button></a> 
+                  <% } %>
+          </div>
+        </div>
+        <hr class="d-sm-none">
+      </div>
+      
+    <%});%>
+    
+    </div>
+    <hr class="my-3">
+    <!-- Pagination-->
+   
+  </div>
+</main>
+<script>
+  function searchProducts(){
+        
+        let product = document.getElementById('find').value;
+      
+        $.ajax({
+          url:'/search',
+          method:'post',
+          data:{
+            product:product
+          },success:(response)=>{
+            const pagDisplay = document.getElementById('pagination')
+            if(pagDisplay.style.display=="flex"){
+              pagDisplay.style.display="none"
+            }
+            let searchedArea = document.getElementById('searched');
+            let html = "";
+            if(response.product){
+             
+              response.product.forEach((element) => { 
+               console.log(element);
+                      html+=`<div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4" id="searchProduct">
+                  <div class="card product-card">
+                    <a href="/addToWishlist?id=${element._id}"><button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></a></button><a class="card-img-top d-block overflow-hidden" href="/singleproduct?id=${element._id}"><img src="Image/${element.image[0]}" alt="Product" style="width:295px;height: 250px;border-radius:0.3rem;"></a>
+                    <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+                      <h3  class="product-title fs-sm"><a  class="productName">${element.name}</a></h3>
+                      <div class="d-flex justify-content-between">
+                        <div class="product-price"><span class="text-accent">${element.price}.<small>00</small></span></div>
+                        <div class="star-rating">
+                        </div>
+                      </div>
+                    </div>
+                  
+                    <div class="card-body card-body-hidden">`
+
+                       if (element.stock  == 0) {
+                         html += `
+                        <button class="btn btn-dark btn-sm d-block w-100 mb-2" type="button">
+                              <div class="d-flex m-0 p-0 justify-content-center">
+                              <p class="m-0 p-0 pe-1"><span style="font-size: 15px; padding-top: 2px;" class="material-symbols-outlined">brightness_empty</span></p>
+                              Out Of Stock
+                            </div>
+                            </button>`
+                          }else{
+                           html += `
+                           <a href="/addToCart?id=${element._id}"><button class="btn btn-primary btn-sm d-block w-100 mb-2"  type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button></a>  
+                            `
+                            }
+                            html += `
+                    </div>
+                  </div>
+                  <hr class="d-sm-none">
+                </div>`
+              });
+              searchedArea.innerHTML = html;
+            }
+          },error:function(error){
+            console.log(error);
+          }
+        }).done((data)=>{
+
+        })
+    
+  }
+
+// !!!!!store pagination
+
+function pagination(page){
+  console.log(page,"it is page");
+  fetch(`/allProducts?page=${page}`)
+  .then(response=>response.json())
+  .then(response=>{
+    let searchedArea = document.getElementById('searched');
+            let html = "";
+            if(response.ProductData){
+              response.ProductData.forEach((element) => { 
+               console.log(element);
+                      html+=`<div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4" id="searchProduct">
+                  <div class="card product-card">
+                    <a href="/addToWishlist?id=${element._id}"><button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><i class="ci-heart"></i></a></button><a class="card-img-top d-block overflow-hidden" href="/singleproduct?id=${element._id}"><img src="Image/${element.image[0]}" alt="Product" style="width:295px;height: 250px;border-radius:0.3rem;"></a>
+                    <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1" href="#"></a>
+                      <h3  class="product-title fs-sm"><a  class="productName">${element.name}</a></h3>
+                      <div class="d-flex justify-content-between">
+                        <div class="product-price"><span class="text-accent">${element.price}.<small>00</small></span></div>
+                        <div class="star-rating">
+                        </div>
+                      </div>
+                    </div>
+                  
+                    <div class="card-body card-body-hidden">`
+
+                       if (element.stock  == 0) {
+                         html += `
+                        <button class="btn btn-dark btn-sm d-block w-100 mb-2" type="button">
+                              <div class="d-flex m-0 p-0 justify-content-center">
+                              <p class="m-0 p-0 pe-1"><span style="font-size: 15px; padding-top: 2px;" class="material-symbols-outlined">brightness_empty</span></p>
+                              Out Of Stock
+                            </div>
+                            </button>`
+                          }else{
+                           html += `
+                           <a href="/addToCart?id=${element._id}"><button class="btn btn-primary btn-sm d-block w-100 mb-2"  type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button></a>  
+                            `
+                            }
+                            html += `
+                    </div>
+                  </div>
+                  <hr class="d-sm-none">
+                </div>`
+              });
+              searchedArea.innerHTML = html;
+            }
+
+  })
+  .catch(error=>console.error(error))
+}
+
+</script>
+
+<%-include("../users/layout/footer.ejs")%>

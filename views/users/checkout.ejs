@@ -1,0 +1,361 @@
+<%-include("../users/layout/header.ejs")%>
+<main>
+<div class="page-title-overlap bg-dark pt-4">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+            <li class="breadcrumb-item"><a class="text-nowrap" href="/"><i class="/"></i>Home</a></li>
+           
+            <li class="breadcrumb-item text-nowrap active" aria-current="page">Checkout</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+        <h1 class="h3 text-light mb-0">Checkout</h1>
+      </div>
+    </div>
+</div>
+<div class="container pb-5 mb-2 mb-md-4">
+    <div class="row">
+      <section class="col-lg-8">
+        <!-- Steps-->
+        <div class="steps steps-light pt-2 pb-3 mb-5"><a class="step-item active" href="/cartmanagement">
+            <div class="step-progress"><span class="step-count">1</span></div>
+            <div class="step-label"><i class="ci-cart"></i>Cart</div></a><a class="step-item active current" href="checkout-details.html">
+            <div class="step-progress"><span class="step-count">2</span></div>
+            <div class="step-label"><i class="ci-user-circle"></i>Details</div></a><a class="step-item">
+            <div class="step-progress"><span class="step-count">3</span></div>
+            <div class="step-label"><i class="ci-check-circle"></i>Review</div></a></div>
+        <!-- Autor info-->
+        <div class="d-sm-flex justify-content-between align-items-center bg-secondaryrounded-3 mb-grid-gutter">
+          
+        </div>
+        <!-- Shipping address-->
+        <form  id="submitForm">
+            <!-- action="/cartmanagement" method="post" -->
+        <h2 class="h6 pt-1 pb-3 mb-3 border-bottom">Choose address</h2>
+        <button type="button" id="show-form-btn" class="btn btn-secondary btn-outline-warning mb-4"><b>Show Address</b> </button>
+        <div class="row" id="my-form" style="display:none;">
+          <div  class="row">
+            <p style="font-size: 12px; color: rgb(141, 195, 161);">Click the Address For Delivery</p>
+           <%userAddress.address.forEach((userAddress,i)=>{%>
+            <div class="col-sm-4">
+                <div class="card border-primary mb-3 mt-3"  style="max-width: 25rem; height: 18rem;">
+                    <div class="card-header"><div class="form-check">
+                        <input class="form-check-input address_id" type="radio" onclick="selectAddress('<%=userAddress._id%>')" name="selectedAddress"  value="<%=userAddress._id%>">
+                        <label class="form-check-label" for="optionsRadios1">
+                          Address <%=i+1 %>
+                        </label>
+                      </div></div>
+                    <div class="card-body m-0">
+                    <h6 class="card-title">Name:<%=userAddress.fname%> <%=userAddress.lname%></h6>
+                        Phone: <%=userAddress.phone%>,
+                        House: <%=userAddress.house%>,
+                        Locality: <%=userAddress.locality%>,
+                        Hometown: <%=userAddress.hometown%>, 
+                        City: <%=userAddress.city%>, 
+                        State: <%=userAddress.state%>, 
+                        Country: <%=userAddress.country%>, 
+                        PIN: <%=userAddress.pin%>
+                    </div>
+                </div>
+            
+            </div>
+            <%});%>
+          </div>
+        </div>
+       
+        <h2 class="h6 pt-1 pb-3 mb-3 border-bottom">Shipping address</h2>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label" for="checkout-fn">First Name</label>
+              <input class="form-control" name="fname" type="text" id="fname" required>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label" for="checkout-ln">Last Name</label>
+              <input class="form-control" name="lname" type="text" id="lname" required>
+            </div>
+          </div>
+        </div>
+        <div class="row"> 
+            <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label" for="checkout-phone">Phone Number</label>
+              <input class="form-control" name="phoneNo" type="text" id="phoneNo" required>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="address-line1">Your Address(HO)</label>
+            <input class="form-control" name="homeAdd" type="text" id="homeAdd" required>
+            <div class="invalid-feedback">Please fill in your address!</div>
+          </div>
+          
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="mb-3">
+                  <label class="form-label" for="checkout-email">Locality</label>
+                  <input class="form-control" name="locality" type="text" id="locality" required>
+                </div>
+              </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="address-city">Home Town</label>
+            <input class="form-control" name="homeTown" type="text" id="homeTown" required>
+            <div class="invalid-feedback">Please fill in your Home Town!</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <label class="form-label" for="address-city">City</label>
+            <input class="form-control" name="city" type="text" id="city" required>
+            <div class="invalid-feedback">Please fill in your city!</div>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="address-country">State</label>
+            <select class="form-select" name="state" id="state" required>
+              <option value>Select State</option>
+              <option value="Kerala">Kerala</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Goa">Goa</option>
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+            </select>
+            <div class="invalid-feedback">Please select your state!</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label" for="checkout-city">Country</label>
+              <select class="form-select" name="country" id="Country" required>
+                <option>Choose Country</option>
+                <option value="India">India</option>
+                
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-3">
+              <label class="form-label" for="checkout-zip">PIN Code</label>
+              <input class="form-control" name="pin" type="text" id="pin" required>
+            </div>
+          </div>
+        </div>
+        <h2 class="h6 pt-1 pb-3 mb-3 border-bottom">Payment Methods</h2>
+        <div class="d-flex justify-content-between mb-3" style=" width: 14.5rem;">
+        <div class="form-check">
+            <input class="form-check-input paymentMethod" type="radio" name="payment" id="optionsRadios1" value="COD">
+            <label class="form-check-label" for="optionsRadios1">
+              Cash On Delivery
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input paymentMethod" type="radio" name="payment" id="optionsRadios2" value="onlinePayment">
+            <label class="form-check-label" for="optionsRadios2">
+                Razorpay
+            </label>
+          </div>
+        </div>
+        
+        <div class="d-none d-lg-flex pt-4 mt-3">
+            <div class="w-50 pe-3"><a class="btn btn-secondary d-block w-100" href="/cartmanagement"><i class="ci-arrow-left mt-sm-0 me-1"></i><span class="d-none d-sm-inline">Back to Cart</span><span class="d-inline d-sm-none">Back</span></a></div>
+            <div class="w-50 ps-2"><button class="btn btn-primary d-block w-100" ><span class="d-none d-sm-inline">Proceed to Buy</span><span class="d-inline d-sm-none">Next</span><i class="ci-arrow-right mt-sm-0 ms-1"></i></button></div>
+          </div>
+          
+    </form>
+    <br>
+    <!-- address Bar -->
+   
+      </section>
+      <!-- Sidebar-->
+      <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
+        <div class="bg-white rounded-3 shadow-lg p-4 ms-lg-auto">
+          <div class="py-2 px-xl-2">
+            <div class="widget mb-3">
+              <h2 class="widget-title text-center">Order summary</h2>
+           <%user.cart.items.forEach((item,i)=>{%>
+              <div class="d-flex align-items-center pb-2 border-bottom"><a class="d-block flex-shrink-0" href="shop-single-v1.html"><img src="/Image/<%=item.Product_Id.image[0]%>" width="64" alt="Product"></a>
+                <div class="ps-2">
+                  <h6 class="widget-product-title"><a href="shop-single-v1.html"><%=item.Product_Id.name%></a></h6>
+                  <div class="widget-product-meta"><span class="text-accent me-2">RS: <%=item.Product_Id.price%></span><span class="text-muted">x <%=item.qty%></span></div>
+                </div>
+              </div>
+              <%}); %>
+            </div>
+            <ul class="list-unstyled fs-sm pb-2 border-bottom">
+              <li class="d-flex justify-content-between align-items-center"><span class="me-2">Subtotal:</span><span class="text-end">RS: <%=user.cart.totalPrice %>.<small>00</small></span></li>
+              <li class="d-flex justify-content-between align-items-center"><span class="me-2">Taxes:</span><span class="text-end">RS: 0 .<small>00</small></span></li>
+              <li class="d-flex justify-content-between align-items-center" ><span class="me-2">Discount: </span><span class="text-end" id="discount">
+              <%= user.cart.discount %>
+              </span></li>
+            </ul>
+            <h5 class="fw-normal text-center my-4">RS: <span id="result"><%=user.cart.totalPrice %></span>.<small>00</small></h5>
+            <!-- <form class="needs-validation" method="post" novalidate> -->
+            
+              <div class="mb-3">
+                <input class="form-control" type="text" name="applyCoupon" id="coupon"  placeholder="Coupon code" required>
+                <div class="invalid-feedback">Please provide Coupon code.</div>
+              </div>
+              <p class="text-success" id="couponMessage1"></p>
+              <p class="text-danger" id="couponMessage"></p>
+              <button class="btn btn-outline-primary d-block w-100" onclick="applyCoupon()" type="submit">Apply Coupon code</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+<!-- todo:All script related to address and other things -->
+
+
+<script>
+
+
+function applyCoupon(){
+    let coupon = document.getElementById('coupon').value;
+    console.log(coupon);
+    $.ajax({
+        url:'/applyCoupon',
+        data:{
+            coupon:coupon
+        },
+        method:'post',
+        success:(response)=>{
+            document.getElementById('discount').innerHTML = response.coupAmount;
+            // document.getElementById('discount').innerHTML=response.coupAmount;
+            document.getElementById("couponMessage").textContent = response.message; 
+            document.getElementById("couponMessage1").textContent = response.message1; 
+            document.getElementById("result").textContent = response.theAmount;  
+           
+        }
+    }).done((data)=>{ 
+        console.log(data);
+       
+    })
+       
+}
+
+// show address while clicking button
+const showFormBtn = document.getElementById('show-form-btn');
+const myForm = document.getElementById('my-form');
+
+showFormBtn.addEventListener('click', () => {
+  if (myForm.style.display === 'none') {
+    myForm.style.display = 'block';
+  } else {
+    myForm.style.display = 'none';
+  }
+});
+
+function selectAddress(addressId){
+  console.log(addressId);
+  $.ajax({
+    url:"/selectAddress",
+    method:'post',
+    data:{
+      addressId:addressId
+    },
+    success:(response)=>{
+    
+      $('#fname').val(response.delAddress.fname);
+      $('#lname').val(response.delAddress.lname);
+      $('#phoneNo').val(response.delAddress.phone);
+      $('#homeAdd').val(response.delAddress.house);
+      $('#locality').val(response.delAddress.locality);
+      $('#homeTown').val(response.delAddress.hometown);
+      $('#city').val(response.delAddress.city);
+      $('#state').val(response.delAddress.state);
+      $("select[name='country']").val(response.delAddress.country);
+      $('#pin').val(response.delAddress.pin);
+    }
+  }).then((data)=>{
+    console.log(data);
+   
+  })
+}
+
+
+
+
+
+$("#submitForm").submit((el)=>{
+  el.preventDefault()
+  $.ajax({
+        url:"/submitCheckOut",
+        method:'post',
+        data:$('#submitForm').serialize(),
+        success:(response)=>{
+          console.log(response);
+          if(response.codsuccess&&response.cod){
+            console.log("helloooooo");
+            location.href="/success";
+          }else{
+            razorPayment(response.order)
+          }
+
+        }
+    }).then((data)=>{
+        // console.log(data);
+        // location.href="/success"
+ 
+    })
+  }
+)
+function razorPayment(order){
+  alert(order.id)
+  var options = {
+    "key": "rzp_test_TbTb7oC9Inl1BD", // Enter the Key ID generated from the Dashboard
+    "amount": "order.amount", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "DigiCart", //your business name
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler":function(response){
+      verifyPayment(response,order)
+    },
+    "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+    "prefill": {
+        "name": "Gaurav Kumar", //your customer's name
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.open();
+}
+function verifyPayment(payment,order){
+  $.ajax({
+    url:'/verifyPayment',
+    data:{
+      payment,
+      order
+    },
+    method:'post',
+    success:(response)=>{
+      if(response.success){
+        location.href="/success"
+      }else{
+        alert("Payment Failed!!")
+      }
+    }
+  })
+}
+
+
+
+
+</script>
+
+
+<%-include("../users/layout/footer.ejs")%>

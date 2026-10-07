@@ -1,0 +1,65 @@
+<%-include("../admin/layout/header.ejs")%>
+      <!-- Dashboard header-->
+  
+      <section class="col pt-lg-4 pb-4 mb-3 me-4">
+        <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+          <h2 class="h4 pt-2 pb-4 mb-0 text-center text-sm-start border-bottom border-primary">User List<span class="badge bg-faded-accent fs-sm text-body align-middle ms-2"><%=userCount%></span></h2>
+          </div>
+          <!-- Product-->
+          <table id="user" class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">lase Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">status</th>
+                </tr>
+            </thead>
+            <tbody>
+          <% userDatas.forEach(function(userDatas,i){%>
+            
+            <tr>
+              <th><%=i+1%></th>
+              <td><%=userDatas.firstName%></td>
+              <td><%=userDatas.lastName%></td>
+              <td><%=userDatas.email%></td>
+              <td><%=userDatas.mobile%></td>
+              <div class="d-sm-flex align-items-center pt-2">
+                <%if(userDatas.access==="active"){%>
+                  <td>
+                    
+                  <form action="/admin/clickBlock/<%=userDatas._id%>" method="post">
+                    <p style="color: rgb(11, 213, 28); padding: 0; margin: 2px;"><%=userDatas.access%></p>
+                 <button class="container-fluid btn btn-danger btn-sm mx-auto mx-sm-0 my-0 "type="submit" style="width: 13em;">click to Block</button>
+                </form>
+              </td>
+
+               <% }else if(userDatas.access==="blocked"){%>
+                <td>
+                  
+                <form action="/admin/clickUnblock/<%=userDatas._id%>" method="post">
+                  <p style="color: rgb(213, 11, 11); padding: 0;"><%=userDatas.access%></p>
+                <button class="container-fluid btn btn-success btn-sm  mx-sm-0 my-0" type="submit" style="width: 13em;" >click to Unblock</button>
+                </form>
+              </td>
+               <%}%>
+                
+              </div>
+            </tr>
+          <%})%>
+        </tbody>
+        </table>
+      </section>
+   
+
+<script>
+  $(document).ready(function () {
+     $('#user').DataTable();
+     $('.dataTables_length').addClass('bs-select');
+  });
+</script>
+
+   
+<%-include("../admin/layout/footer.ejs")%>

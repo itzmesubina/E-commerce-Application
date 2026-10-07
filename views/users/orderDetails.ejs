@@ -1,0 +1,49 @@
+<%-include("../users/layout/header.ejs")%>
+<main>
+<div class="container-fluid mt-5 mb-5">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title pb-2">Order Details</h6>
+          <!-- <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button> -->
+        </div>
+        <% orderData.products.forEach((orderdata,i)=>{%>
+           
+        <div class="modal-body pb-0">
+          <div class="d-sm-flex justify-content-between pb-3 pb-sm-2 border-bottom">
+            <div class="d-sm-flex text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto" style="width: 10rem;"><img src="/Image/<%=orderdata.product.image[0] %>" alt="Product"></a>
+              <div class="ps-sm-4 pt-2"  style="width: 180px;">
+                <h3 class="product-title fs-base mb-2"><a href="shop-single-v1.html"><%=orderdata.product.name %></a></h3>
+                <div class="fs-lg text-accent pt-2"><%=orderdata.product.price %>/-</div>
+              </div>
+            </div>
+            <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center ">
+              <div class="text-muted mb-2">Quantity:</div><%=orderdata.quantity %>
+            </div>
+            <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+              <div class="text-muted mb-2">Subtotal</div>RS:<%=orderdata.totalPrice %>.<small>00</small>
+            </div>
+          </div>
+          <% }) %>
+          <div class="container mt-3 border border-3 d-flex flex-column  align-items-center mt-3 mb-3" style="background-color: transparent; width: 42vw;height: fit-content">
+            <div class="mt-2 "><h6 class=" border-2 border-black border-bottom">Delivery Address</h6></div>
+            <div class="m-0 p-0 " style="height: 1.3rem;"><p>Name: <%=orderData.address.fname %> <%=orderData.address.lname %></p></div>
+            <div  style="height: 1.3rem;"><p>Phone Number: <%=orderData.address.phone %> </p></div>
+            <div  style="height: 1.3rem;"><p>House Address: <%=orderData.address.house %>(ho), <%=orderData.address.locality %>, </p></div>
+            <div style="height: 1.3rem;"><p><%=orderData.address.hometown %>, <%=orderData.address.city %></p></div>
+            <div  style="height: 1.3rem;"><p>State: <%=orderData.address.state %>, Country: <%=orderData.address.country %> </p></div>
+            <div class="mb-3"  style="height: 1.3rem;"><p>Pin : <%=orderData.address.pin  %> </p></div>
+          </div>
+        <div class="modal-footer flex-wrap  justify-content-end bg-secondary fs-md " style="flex-direction: column;">
+          <!-- <div class="px-2 py-1"><span class="text-muted">Subtotal:&nbsp;</span><span>$265.<small>00</small></span></div> -->
+          <div class="px-2 py-1 "><span class="text-muted">Total:&nbsp;</span><span class="fs-lg"> RS :<%=orderData.Subtotal %>/-</span></div>
+          <a href="/orderHistory"><button type="button mt-2" class="btn btn-outline-primary"> < Back </button></a> 
+        </div>
+       
+      </div>
+      
+    </div>
+  </div>
+</div>
+</main>
+<%-include("../users/layout/footer.ejs")%>

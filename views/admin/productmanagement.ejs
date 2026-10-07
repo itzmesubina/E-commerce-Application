@@ -1,0 +1,117 @@
+<%-include("../admin/layout/header.ejs")%>
+<!-- Product Management -->
+<section class="col pt-lg-4 pb-4 mb-3 me-4">
+<div class="col pt-4">
+    <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+        <h2 class="h4 pt-2 pb-4 mb-0 text-center text-sm-start border-bottom border-primary">Products<span class="badge bg-faded-accent fs-sm text-body align-middle ms-2"></span></h2>
+        </div>
+    <!-- Tabs-->
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+      <li class="nav-item"><a class="nav-link px-0 active" href="#Products" data-bs-toggle="tab" role="tab">
+          <div class="d-none d-lg-block"><i class="ci-heart opacity-60 me-2"></i>Products</div>
+          <div class="d-lg-none text-center"><i class="ci-user opacity-60 d-block fs-xl mb-2"></i><span class="fs-ms">Products 
+           
+          </span></div></a></li>
+          <a href="/admin/addNewproduct"><button type="button" class="btn btn-primary mt-1 me-2">Add Product</button> </a>
+    
+      
+    </ul>
+    <!-- Tab content-->
+    <div class="tab-conten">
+      <!-- Product-->
+      <div class="tab-pane fade show active" id="Products" role="tabpanel">
+        <section class="pe-4 " >
+                <table id="products" class="table table-hover ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Si.No</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% productDatas.forEach(function(productDatas,i){%>
+            
+                            <tr>
+                              <th><%=i+1%></th>
+                              <td><%=productDatas.name%></td>
+                              <td><img style="width: 90px;" src="/Image/<%=productDatas.image[0]%>"></td>
+                              <td><%=productDatas.price%></td>
+                              <td><%=productDatas.stock%></td>
+                              <td id="status"><%=productDatas.status%></td>
+                              <td><%=productDatas.category.categoryName%></td>
+                              <td style="max-width: 20px;font-size: 13px;" ><%=productDatas.description%></td>
+                              <td><%=productDatas.date.toLocaleString()%></td>
+                              <td>
+                                <a href="/admin/editProduct?id=<%=productDatas._id%>"><button type="button"  class="btn btn-info btn-sm mb-1" style="width: 5.6em;">Edit</button></a>
+                                <% if(productDatas.status=="Active") {%>
+                                  <a href="#"><button type="button" onclick="changeStatus('<%=productDatas._id%>')"  class="btn btn-primary btn-sm">Disable</button></a>
+                                  <% }else if(productDatas.status=="Disabled" ){ %>
+                                  <a href="#"><button type="button" onclick="enablePro('<%=productDatas._id%>')"  class="btn btn-success btn-sm">Enable</button></a>
+                                <%} %>
+                              </td>
+                            </tr>
+                            <%})%>
+                        </tbody>
+                </table>
+                      </div>  
+            </div>
+        </section>  
+
+</section>
+    
+      <!-- edit Product-->
+      
+<script>
+    $(document).ready(function () {
+       $('#products').DataTable();
+       $('.dataTables_length').addClass('bs-select');
+    });
+
+
+  // !!!!!
+  function changeStatus(proId){
+    console.log(proId);
+    $.ajax({
+      url:'/admin/changeProductStatus',
+      data:{
+        proId:proId
+      },
+      method:'post',
+      success:(response)=>{
+        // document.getElementById('status').innerText = response.proud;
+      }
+    }).done((data)=>{
+      location.reload()
+      // 
+    })
+  }
+
+  // enable product status
+  function enablePro(proId){
+    console.log(proId);
+    axios({
+      method: 'post',
+      url: '/admin/enableProduct',
+      data: {
+        proId:proId
+      }
+    }).then(function(response){
+      Swal.fire('Product Enabled')
+      .then(function(response){
+      location.reload()
+    })
+      
+    })
+  }
+  </script>
+       
+      
+<%-include("../admin/layout/footer")%>

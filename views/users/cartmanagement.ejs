@@ -1,0 +1,211 @@
+<%-include("../users/layout/header.ejs")%>
+<div class="page-title-overlap bg-dark pt-4">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+            <li class="breadcrumb-item"><a class="text-nowrap" href="/"><i class="ci-home"></i>Home</a></li>
+           
+          </ol>
+        </nav>
+      </div>
+      <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+        <h1 class="h3 text-light mb-0">Your cart</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container pb-5 mb-2 mb-md-4">
+    <div class="row">
+      <!-- List of items-->
+      <section class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center pt-3 pb-4 pb-sm-5 mt-1">
+          <h2 class="h6 text-light mb-0">Products</h2><a class="btn btn-outline-primary btn-sm ps-2" href="/allProducts"><i class="ci-arrow-left me-2"></i>Continue shopping</a>
+        </div>
+        <!-- Item-->
+        <% if(userData.cart.items.length==0){%>
+          <!-- <h1>Onn podo</h1> -->
+          <div class="container-fluid  mt-100">
+            <div class="row">
+            
+             <div class="col-md-12">
+             
+                 <div class="card">
+               <div class="card-header">
+               <!-- <h5>Cart</h5> -->
+               </div>
+               <div class="card-body cart">
+                   <div class="col-sm-12 empty-cart-cls text-center">
+                     <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                     <h3><strong>Your Cart is Empty</strong></h3>
+                     <h4>Add something to make me happy :)</h4>
+                     <a href="/allProducts" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+                   </div>
+               </div>
+           </div>
+               
+             
+             </div>
+            
+            </div>
+           
+           </div>
+       <%}else{%>
+       
+    <% userData.cart.items.forEach(function(data,i){%>
+  
+        <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
+          <div class="d-block d-sm-flex align-items-center text-center text-sm-start"><a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="/singleproduct?id=<%=userData.cart.items[i].Product_Id._id%>"><img src="/Image/<%=userData.cart.items[i].Product_Id.image[0]%>" width="160" alt="Product"></a>
+            <div class="pt-2">
+              <h3 class="product-title fs-base mb-2"><a><%=userData.cart.items[i].Product_Id.name%></a></h3>
+              <!-- <div class="fs-sm"><span class="text-muted me-2">Size:</span>8.5</div> -->
+              <div class="fs-sm"><span class="text-muted me-2"><%=userData.cart.items[i].Product_Id.description%></div>
+              <div class="fs-lg text-accent pt-2"><%=userData.cart.items[i].price%></div>
+            </div>
+          </div>
+          <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
+            <label class="form-label" for="quantity1">Quantity</label>
+            <br>
+            
+            <div class="d-flex ">
+             
+              <button id="negativeCount<%=userData.cart.items[i].Product_Id._id %>"  onclick="changequantity('<%=use._id%>','<%=userData.cart.items[i].Product_Id._id%>',-1)" class="btn btn-dark btn-sm ms-2 me-2" style="height: 3.4em; display: none;">-</button>
+              <button id="minCount<%=userData.cart.items[i].Product_Id._id %>" class="btn btn-secondary btn-sm ms-2 me-2" style="height: 3.4em; display: none;">-</button>
+          
+            <p class="form-control" type="number" id="<%=userData.cart.items[i].Product_Id._id%>" value="" > <%=userData.cart.items[i].qty%> </p>
+            <p hidden id="stock<%=userData.cart.items[i].Product_Id._id%>"></p>
+            <button id="positiveCount<%=userData.cart.items[i].Product_Id._id %>" onclick="changequantity('<%=use._id%>','<%=userData.cart.items[i].Product_Id._id%>',1)" class="btn btn-dark btn-sm ms-2" style="height: 3.4em;">+</button>
+            <p id="stockWarning<%=userData.cart.items[i].Product_Id._id %>" style="display: none; color: red;">Stock Limit</p>
+            <br>
+          </div>
+            
+            <button class="btn btn-link px-0 text-danger" onclick="removeCartItem('<%=userData.cart.items[i].Product_Id._id%>')" type="button"><i class="ci-close-circle me-2"></i><span class="fs-sm">Remove</span></button>
+            <% if(typeof stock != 'undefined'){
+              if(typeof proId!='undefined' ){
+              if (proId==userData.cart.items[i].Product_Id._id) {%>
+              
+              <button class="btn btn-link px-0 " style="color: rgb(55, 0, 255);" onclick="addToWishList('<%=userData.cart.items[i].Product_Id._id%>')" type="button"><i class="ci-heart me-2"></i><span class="fs-sm">Add To Wish List</span></button>
+            <%}}}%>
+          </div>
+        </div>
+        <%})}%>
+      </section>
+      <!-- Sidebar-->
+      <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
+        <div class="bg-white rounded-3 shadow-lg p-4">
+          <div class="py-2 px-xl-2">
+            <div class="text-center mb-4 pb-3 border-bottom">
+              <h2 class="h6 mb-3 pb-1">Subtotal</h2>
+              <div class="d-flex justify-content-center"><h3 class="fw-normal" id="totalprice"><%=userData.cart.totalPrice%> </h3><h4>/-</h4></div>
+            </div>
+            <div class="accordion" id="order-options">
+              
+              <div class="accordion-item">
+               
+              </div>
+              <% if(userData.cart.items.length==0){
+                }else{%>
+                  <% if(typeof stock !='undefined'){%>
+                    <div class="alert alert-warning" role="alert">
+                     <p class="m-0 p-0">Please remove the</p><%=stock%><p class="m-0 p-0">,Because the stock is empty.then purchase</p> 
+                    </div>
+                 <% }else{%>
+                  </div><a class="btn btn-primary btn-shadow d-block w-100 mt-4" href="/checkOut"><i class="ci-card fs-lg me-2"></i>Proceed to Checkout</a>
+                 <% } %>
+           
+          <%}%>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<script>
+  
+  function changequantity(userid,proid,count){
+    console.log(userid,'usssiddddd');
+    console.log(proid,'prooooo');
+    console.log(count,'cccccc');
+    console.log(Number($('#'+proid).html()));
+
+    $.ajax({
+      url:'/change-product-quantity',
+      data:{
+        user:userid,
+        product:proid,
+        count:count
+      },
+      method:'post',
+      success:(response)=>{
+        document.getElementById('totalprice').innerHTML = response.total;
+        var stock  =response.productStock.stock;
+        console.log(stock);
+        document.getElementById('stock'+proid).innerText=stock  
+        // document.getElementById(proid).innerText = parseInt(document.getElementById(proid).innerText)+count;
+        const data =  parseInt(document.getElementById(proid).innerText)+count;
+        document.getElementById(proid).innerText =data;
+       const plusBtn= document.getElementById("positiveCount"+proid)
+       const stockWarning = document.getElementById('stockWarning'+proid)
+
+              if(stock==data){
+                plusBtn.style.display="none";
+                stockWarning.style.display='block'
+              }else if(stock>=data) {
+                plusBtn.style.display="block";
+                stockWarning.style.display='none'
+              }
+              const minCount = document.getElementById("minCount"+proid)
+              const negativeCount = document.getElementById("negativeCount"+proid)
+              if(data==1||data<1){
+                minCount.style.display = "block";
+                negativeCount.style.display = "none"
+              }else if(data>1){
+                minCount.style.display = "none";
+                negativeCount.style.display = "block"
+              }
+      },
+    }).done((data)=>{
+      console.log(data);
+      if(data.success){
+        // window.location.reload();
+      }
+    })
+  }
+
+
+
+
+
+  function removeCartItem(userId){
+    $.ajax({
+      url:'/removeCartItem',
+      data:{
+          productId:userId
+      },method:'post',
+      success:(response)=>{
+
+      },
+    }).done((data)=>{
+      console.log(data);
+      if(data.success){
+        location.reload()
+      }
+    })
+  }
+
+  // if wishlist is Theater
+  function addToWishList(proId){
+    $.ajax({
+      url:'/ifWish',
+      method:'post',
+      data:{
+        proId:proId
+      },success:(response)=>{
+        location.reload()
+      }
+    })
+  }
+</script>
+
+
+<%-include("../users/layout/footer.ejs")%>

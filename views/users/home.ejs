@@ -1,0 +1,261 @@
+<%-include("../users/layout/header.ejs")%>
+  <!-- Body-->
+  
+
+    <!-- Google Tag Manager (noscript)-->
+    <noscript>
+      <iframe src="http://www.googletagmanager.com/ns.html?id=GTM-WKV3GT5" height="0" width="0" style="display: none; visibility: hidden;"></iframe>
+    </noscript>
+    <!-- Sign in / sign up modal-->
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-secondary">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+              <li class="nav-item"><a class="nav-link fw-medium active" href="#signin-tab" data-bs-toggle="tab" role="tab" aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Sign in</a></li>
+              <li class="nav-item"><a class="nav-link fw-medium" href="#signup-tab" data-bs-toggle="tab" role="tab" aria-selected="false"><i class="ci-user me-2 mt-n1"></i>Sign up</a></li>
+            </ul>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body tab-content py-4">
+            <form action="/signin" method="post"  class="needs-validation tab-pane fade show active"   id="signin-tab">
+              <div class="mb-3">
+                <label class="form-label" for="si-email">Email address</label>
+                <input class="form-control"  name="email" type="email" id="si-email"  placeholder="johndoe@example.com" required>
+                <div class="invalid-feedback">Please provide a valid email address.</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="si-password">Password</label>
+                <div class="password-toggle">
+                  <input class="form-control" name="password" type="password" id="si-password" required>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-3 d-flex flex-wrap justify-content-between">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="si-remember">
+                  <label class="form-check-label" for="si-remember">Remember me</label>
+                </div><a class="fs-sm" href="#">Forgot password?</a>
+              </div>
+              <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
+            </form>
+            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
+              <div class="mb-3">
+                <label class="form-label" for="su-name">Full name</label>
+                <input class="form-control" type="text" id="su-name" placeholder="John Doe" required>
+                <div class="invalid-feedback">Please fill in your name.</div>
+              </div>
+              <div class="mb-3">
+                <label for="su-email">Email address</label>
+                <input class="form-control" type="email" id="su-email" placeholder="johndoe@example.com" required>
+                <div class="invalid-feedback">Please provide a valid email address.</div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="su-password">Password</label>
+                <div class="password-toggle">
+                  <input class="form-control" type="password" id="su-password" required>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="su-password-confirm">Confirm password</label>
+                <div class="password-toggle">
+                  <input class="form-control" type="password" id="su-password-confirm" required>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
+                  </label>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main class="page-wrapper">
+      <!-- Quick View Modal-->
+      <div class="modal-quick-view modal fade" id="quick-view-electro" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title product-title"><a href="shop-single-v2.html" data-bs-toggle="tooltip" data-bs-placement="right" title="Go to product page">Smartwatch Youth Edition<i class="ci-arrow-right fs-lg ms-2"></i></a></h4>
+              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <!-- Product gallery-->
+                <div class="col-lg-7 pe-lg-0">
+                  <div class="product-gallery">
+                    <div class="product-gallery-preview order-sm-2">
+                      <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="img/shop/single/gallery/05.jpg" data-zoom="img/shop/single/gallery/05.jpg" alt="Product image">
+                        <div class="image-zoom-pane"></div>
+                      </div>
+                      <div class="product-gallery-preview-item" id="second"><img class="image-zoom" src="img/shop/single/gallery/06.jpg" data-zoom="img/shop/single/gallery/06.jpg" alt="Product image">
+                        <div class="image-zoom-pane"></div>
+                      </div>
+                      <div class="product-gallery-preview-item" id="third"><img class="image-zoom" src="img/shop/single/gallery/07.jpg" data-zoom="img/shop/single/gallery/07.jpg" alt="Product image">
+                        <div class="image-zoom-pane"></div>
+                      </div>
+                      <div class="product-gallery-preview-item" id="fourth"><img class="image-zoom" src="img/shop/single/gallery/08.jpg" data-zoom="img/shop/single/gallery/08.jpg" alt="Product image">
+                        <div class="image-zoom-pane"></div>
+                      </div>
+                    </div>
+                    <div class="product-gallery-thumblist order-sm-1"><a class="product-gallery-thumblist-item active" href="#first"><img src="img/shop/single/gallery/th05.jpg" alt="Product thumb"></a><a class="product-gallery-thumblist-item" href="#second"><img src="img/shop/single/gallery/th06.jpg" alt="Product thumb"></a><a class="product-gallery-thumblist-item" href="#third"><img src="img/shop/single/gallery/th07.jpg" alt="Product thumb"></a><a class="product-gallery-thumblist-item" href="#fourth"><img src="img/shop/single/gallery/th08.jpg" alt="Product thumb"></a></div>
+                  </div>
+                </div>
+                <!-- Product details-->
+                <div class="col-lg-5 pt-4 pt-lg-0 image-zoom-pane">
+                  <div class="product-details ms-auto pb-3">
+                    <div class="mb-2">
+                      <div class="star-rating"><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star-filled active"></i><i class="star-rating-icon ci-star"></i>
+                      </div><span class="d-inline-block fs-sm text-body align-middle mt-1 ms-1">74 Reviews</span>
+                    </div>
+                    <div class="h3 fw-normal text-accent mb-3 me-1">$124.<small>99</small></div>
+                    <div class="fs-sm mb-4"><span class="text-heading fw-medium me-1">Color:</span><span class="text-muted" id="colorOptionText">Dark blue/Orange</span></div>
+                    <div class="position-relative me-n4 mb-3">
+                      <div class="form-check form-option form-check-inline mb-2">
+                        <input class="form-check-input" type="radio" name="color" id="color1" data-bs-label="colorOptionText" value="Dark blue/Orange" checked>
+                        <label class="form-option-label rounded-circle" for="color1"><span class="form-option-color rounded-circle" style="background-color: #f25540;"></span></label>
+                      </div>
+                      <div class="form-check form-option form-check-inline mb-2">
+                        <input class="form-check-input" type="radio" name="color" id="color2" data-bs-label="colorOptionText" value="Dark gray/Green">
+                        <label class="form-option-label rounded-circle" for="color2"><span class="form-option-color rounded-circle" style="background-color: #65805b;"></span></label>
+                      </div>
+                      <div class="form-check form-option form-check-inline mb-2">
+                        <input class="form-check-input" type="radio" name="color" id="color3" data-bs-label="colorOptionText" value="White">
+                        <label class="form-option-label rounded-circle" for="color3"><span class="form-option-color rounded-circle" style="background-color: #f5f5f5;"></span></label>
+                      </div>
+                      <div class="form-check form-option form-check-inline mb-2">
+                        <input class="form-check-input" type="radio" name="color" id="color4" data-bs-label="colorOptionText" value="Black">
+                        <label class="form-option-label rounded-circle" for="color4"><span class="form-option-color rounded-circle" style="background-color: #333;"></span></label>
+                      </div>
+                      <div class="product-badge product-available mt-n1"><i class="ci-security-check"></i>Product available</div>
+                    </div>
+                    <div class="d-flex align-items-center pt-2 pb-4">
+                      <select class="form-select me-3" style="width: 5rem;">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                      <button class="btn btn-primary btn-shadow d-block w-100" type="button"><i class="ci-cart fs-lg me-2"></i>Add to Cart</button>
+                    </div>
+                    <div class="d-flex mb-4">
+                      <div class="w-100 me-3">
+                        <button class="btn btn-secondary d-block w-100" type="button"><i class="ci-heart fs-lg me-2"></i><span class='d-none d-sm-inline'>Add to </span>Wishlist</button>
+                      </div>
+                      <div class="w-100">
+                        <button class="btn btn-secondary d-block w-100" type="button"><i class="ci-compare fs-lg me-2"></i>Compare</button>
+                      </div>
+                    </div>
+                    <h5 class="h6 mb-3 py-2 border-bottom"><i class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>Product info</h5>
+                    <h6 class="fs-sm mb-2">General</h6>
+                    <ul class="fs-sm pb-2">
+                      <li><span class="text-muted">Model: </span>Amazfit Smartwatch</li>
+                      <li><span class="text-muted">Gender: </span>Unisex</li>
+                      <li><span class="text-muted">OS campitibility: </span>Android / iOS</li>
+                    </ul>
+                    <h6 class="fs-sm mb-2">Physical specs</h6>
+                    <ul class="fs-sm pb-2">
+                      <li><span class="text-muted">Shape: </span>Rectangular</li>
+                      <li><span class="text-muted">Body material: </span>Plastics / Ceramics</li>
+                      <li><span class="text-muted">Band material: </span>Silicone</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Navbar Electronics Store-->
+      
+      <!-- Hero (Banners + Slider)-->
+      <section class="bg-secondary py-4 pt-md-5">
+        <div class="container py-xl-2"  style="width: 100%;">
+          <div class="row" style="width: 100%;">
+            <!-- Slider     -->
+            <div class="col-xl-9 pt-xl-4 order-xl-2">
+              <div class="tns-carousel">
+                <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 1, &quot;controls&quot;: false, &quot;loop&quot;: false}">
+                  <% bannerData.forEach(function(bannerData,i){%>
+                  <div>
+                    
+                      
+                    <div class="row align-items-center">
+                      <div class="col-md-6 order-md-2"><img class="d-block mx-auto" src="/Image/<%=bannerData.image[0]%>" alt="VR Collection"></div>
+                      <div class="col-lg-5 col-md-6 offset-lg-1 order-md-1 pt-4 pb-md-4 text-center text-md-start">
+                        <!-- <h2 class="fw-light pb-1 from-bottom"></h2> -->
+                        <h1 class="display-4 from-bottom delay-1"><%=bannerData.title%></h1>
+                        <h5 class="fw-light pb-3 from-bottom delay-2"><%=bannerData.description%></h5>
+                        <div class="d-table scale-up delay-4 mx-auto mx-md-0"><a class="btn btn-primary btn-shadow" target="_blank" href="<%=bannerData.url%>">Shop Now<i class="ci-arrow-right ms-2 me-n1"></i></a></div>
+                      </div>
+                    </div>
+                  </div>
+                    <% }); %>
+
+                </div>
+              </div>
+            </div>
+            <!-- Banner group-->
+           
+          </div>
+        </div>
+      </section>
+      <!-- Products grid (Trending products)-->
+      <section class="container pt-5">
+        <!-- Heading-->
+        <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
+          <h2 class="h3 mb-0 pt-3 me-2">Trending products</h2>
+          <div class="pt-3"><a class="btn btn-outline-accent btn-sm" href="/allProducts">More products<i class="ci-arrow-right ms-1 me-n1"></i></a></div>
+        </div>
+        <!-- Grid-->
+        <div class="row pt-2 mx-n2">
+          <!-- Product-->
+          <%productData.forEach((productData,i) => {%>
+          <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4 productitems" >
+            <div class="card product-card  ">
+             
+                <button class="btn-wishlist btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to wishlist"><a href="/addToWishlist?id=<%=productData._id%>"><i class="ci-heart"></i></a></i></button>
+              </div><a class="card-img-top d-block overflow-hidden" href="/singleproduct?id=<%=productData._id%>"><img style="width:295px;height: 250px;border-radius:0.3rem;" src="/Image/<%=productData.image[0]%>" alt="Product"></a>
+              <div class="card-body py-2"><a class="product-meta d-block fs-xs pb-1"><%=productData.category.categoryName%></a>
+                <h3 class="product-title fs-sm"><a><%=productData.name%></a></h3>
+                <div class="d-flex justify-content-between">
+                  <div class="product-price"><span class="text-black"><i class="ci-rupee me-0.75"></i><%=productData.price%>.<small>00</small></span></div>
+                  <div class="star-rating">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body card-body-hidden">
+                
+                <%if(productData.stock<=0){%>
+                  <button class="btn btn-dark btn-sm d-block w-100 mb-2" type="button">
+                    <div class="d-flex m-0 p-0 justify-content-center">
+                    <p class="m-0 p-0 pe-1"><span style="font-size: 15px; padding-top: 2px;" class="material-symbols-outlined">brightness_empty</span></p>
+                    Out Of Stock
+                  </div>
+                  </button>
+                <%}else{%>
+               <a href="/addToCart?id=<%=productData._id%>"><button class="btn btn-primary btn-sm d-block w-100 mb-2" type="button"><i class="ci-cart fs-sm me-1"></i>Add to Cart</button></a>
+                
+              <% } %>
+              </div>
+            </div>
+            <hr class="d-sm-none">
+         
+          <%});%>
+        </div>
+          
+        </div>
+      </section>
+      
+    </main>
+
+
+
+<%-include("../users/layout/footer.ejs")%>

@@ -1,0 +1,69 @@
+
+<%-include("../users/layout/header.ejs")%>
+
+<main>
+<div class="page-title-overlap bg-dark pt-4">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+            <li class="breadcrumb-item"><a class="text-nowrap" href="/"><i class="ci-home"></i>Home</a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+        <h1 class="h3 text-light mb-0">Profile info</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container pb-5 mb-2 mb-md-4">
+    <div class="row">
+      <!-- Sidebar-->
+      <%-include('../users/layout/shopheader.ejs') %>
+      <!-- Content  -->
+      <section class="col-lg-8">
+        <!-- Toolbar-->
+        <div class="d-none d-lg-flex justify-content-between align-items-center pt-lg-3 pb-4 pb-lg-5 mb-lg-3">
+          <h6 class="fs-base text-light mb-0">Update you profile details below:</h6>
+        </div>
+        <!-- Profile form-->
+        <form action="/changeProfile" method="post">
+          <div class="bg-secondary rounded-3 p-4 mb-4">
+            <div class="d-flex align-items-center">
+            
+            </div>
+          </div>
+          <div class="row gx-4 gy-3">
+            <div class="col-sm-6">
+              <label class="form-label" for="account-fn">First Name</label>
+              <input class="form-control" name="changeUserFname" type="text" id="account-fn" value="<%=userDetails.firstName%>">
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label" for="account-ln">Last Name</label>
+              <input class="form-control" name="changeUserLname" type="text" id="account-ln" value="<%=userDetails.lastName%>">
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label" for="account-email">Email Address</label>
+              <span style="padding-left: 10px; color: red; font-size: 12px;">Email is not able to change</span>
+              <input class="form-control" type="email" value="<%=userDetails.email%>" disabled>
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label" for="account-phone">Phone Number <span style="font-size: 12px; padding-left: 10px; color: red;">Provide 10 digit Mobile Number</span> </label>
+              <input class="form-control" type="text" name="changeMobNumber" id="account-phone" value="<%=userDetails.mobile%>" required>
+            </div>
+          
+            <div class="col-12">
+              <hr class="mt-2 mb-3">
+              <div class="d-flex flex-wrap justify-content-end align-items-center mt-5">
+                
+                <button class="btn btn-primary mt-5 mt-sm-0 d-flex " type="submit">Update profile</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</main>
+
+<%-include("../users/layout/footer.ejs")%>
